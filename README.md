@@ -1,30 +1,43 @@
-# my-midway-project
+# WKU Carpooling System Backend
 
-## QuickStart
+This is the repository for a senior capstone project - WKU Carpooling System.
 
-<!-- add docs here for user -->
+The project is frontend and backend separated. This repository is for the backend of the system.
 
-see [midway docs][midway] for more detail.
+Find the frontend of the system [here](https://github.com/csjkevin/wku-carpooling-system-frontend).
 
-### Development
+## Getting Started
 
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
+### Install Dependencies
 
-### Deploy
+The packages of the project is managed by npm (Node Package Manager) or other node package manager such as yarn, pnpm, etc.
 
-```bash
-$ npm start
-$ npm stop
-```
+Before starting the project, you need to install dependencies.
 
-### npm scripts
+`npm install`
 
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
+If you have Node.js installed in your system, you should have the command of npm. If not, you can check [Node.js](https://nodejs.org/).
 
+## Development
 
-[midway]: https://midwayjs.org
+To start the server in the development mode, run:
+
+`npm run dev`
+
+Access the APIs through [http://localhost:7001](http://localhost:7001).
+
+The server will restart when you make changes.
+
+## Deployment
+
+To start the server in the production mode, run:
+
+`npm start`
+
+## Additional Information
+
+This project is based on Midway Node.js Framework. To learn Midway, check out the [Midway documentation](https://www.midwayjs.org).
+
+The project's object–relational mapping (ORM) is based on TypeORM. To learn TypeORM, check out the [TypeORM documentation](https://typeorm.io).
+
+To learn how TypeORM works with Midway, check out the [Midway - TypeORM](https://www.midwayjs.org/docs/extensions/orm).
