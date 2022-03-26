@@ -15,3 +15,5 @@ run/
 *.un~
 .tsbuildinfo
 .tsbuildinfo.*
+
+typings/
