@@ -10,5 +10,15 @@ export default (appInfo: MidwayAppInfo) => {
     // security: {
     //   csrf: false,
     // },
+    orm: {
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: process.env.WKU_CARPOOLING_SYSTEM_DB_USER,
+      password: process.env.WKU_CARPOOLING_SYSTEM_DB_PASS,
+      database: process.env.WKU_CARPOOLING_SYSTEM_DB_NAME,
+      synchronize: false,
+      logging: false,
+    },
   } as MidwayConfig;
 };
