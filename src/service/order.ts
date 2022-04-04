@@ -1,16 +1,24 @@
-import { Provide } from '@midwayjs/decorator';
+import { Inject, Provide } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/orm';
 import { Order } from '../entity/order';
 import { Repository } from 'typeorm';
 import { IOrderOptions } from '../interface/order';
+import { NotificationService } from './notification';
 
 @Provide()
 export class OrderService {
+  @Inject()
+  notificationService: NotificationService;
+
   @InjectEntityModel(Order)
   orderRepository: Repository<Order>;
 
   async createOrder(options: IOrderOptions) {
     const order = await this.orderRepository.save(options);
+    if (order) {
+      await this.notificationService.newOrderNotificationWechatWork(options);
+      await this.notificationService.newOrderNotificationFeishu(options);
+    }
     return order;
   }
 
