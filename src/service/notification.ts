@@ -1,7 +1,7 @@
 import { Provide } from '@midwayjs/decorator';
-import { IOrderOptions } from '../interface/order';
 import axios from 'axios';
 import * as dayjs from 'dayjs';
+import { OrderDTO } from '../dto/order';
 
 const DATE_FORMAT = 'YYYY年M月D日 HH:mm';
 const WECHATWORK_WEBHOOK_KEY =
@@ -10,7 +10,7 @@ const FEISHU_WEBHOOK_ID = process.env.WKU_CARPOOLING_SYSTEM_FEISHU_WEBHOOK_ID;
 
 @Provide()
 export class NotificationService {
-  async newOrderNotificationWechatWork(options: IOrderOptions) {
+  async newOrderNotificationWechatWork(options: OrderDTO) {
     if (!WECHATWORK_WEBHOOK_KEY) {
       return;
     }
@@ -36,7 +36,7 @@ export class NotificationService {
     return res.data;
   }
 
-  async newOrderNotificationFeishu(options: IOrderOptions) {
+  async newOrderNotificationFeishu(options: OrderDTO) {
     if (!FEISHU_WEBHOOK_ID) {
       return;
     }
