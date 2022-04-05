@@ -13,43 +13,43 @@ export class OrderService {
   @InjectEntityModel(Order)
   orderRepository: Repository<Order>;
 
-  async createOrder(options: OrderDTO) {
-    const order = await this.orderRepository.save(options);
-    if (order) {
+  async create(options: OrderDTO) {
+    const res = await this.orderRepository.save(options);
+    if (res) {
       await this.notificationService.newOrderNotificationWechatWork(options);
       await this.notificationService.newOrderNotificationFeishu(options);
     }
-    return order;
+    return res;
   }
 
-  async deleteOrder(options: OrderDTO) {
-    const order = await this.orderRepository.findOneBy({
+  async delete(options: OrderDTO) {
+    const res = await this.orderRepository.findOneBy({
       id: options.id,
     });
-    if (order) {
-      await this.orderRepository.remove(order);
+    if (res) {
+      await this.orderRepository.remove(res);
     }
   }
 
-  async updateOrder(options: OrderDTO) {
-    const order = await this.orderRepository.findOneBy({
+  async update(options: OrderDTO) {
+    const res = await this.orderRepository.findOneBy({
       id: options.id,
     });
-    if (order) {
+    if (res) {
       for (const key in options) {
-        order[key] = options[key];
+        res[key] = options[key];
       }
-      await this.orderRepository.save(order);
+      await this.orderRepository.save(res);
     }
   }
 
-  async getOrder(options: OrderDTO) {
-    const order = await this.orderRepository.findOneBy(options);
-    return order;
+  async get(options: OrderDTO) {
+    const res = await this.orderRepository.findOneBy(options);
+    return res;
   }
 
-  async getAllOrders() {
-    const orders = await this.orderRepository.find();
-    return orders;
+  async getAll() {
+    const res = await this.orderRepository.find();
+    return res;
   }
 }

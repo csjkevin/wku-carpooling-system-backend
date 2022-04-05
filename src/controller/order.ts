@@ -25,43 +25,43 @@ export class APIController {
 
   @Post('/')
   @Validate()
-  async createOrder(@Body() order: CreateOrderDTO): Promise<IResponse<Order>> {
-    const res = await this.orderService.createOrder({
-      ...order,
-      departureTime: new Date(order.departureTime),
+  async create(@Body() body: CreateOrderDTO): Promise<IResponse<Order>> {
+    const res = await this.orderService.create({
+      ...body,
+      departureTime: new Date(body.departureTime),
     });
     return { success: true, message: 'OK', data: res };
   }
 
   @Del('/:id')
-  async deleteOrder(@Param('id') id: number): Promise<IResponse> {
-    await this.orderService.deleteOrder({ id });
+  async delete(@Param('id') id: number): Promise<IResponse> {
+    await this.orderService.delete({ id });
     return { success: true, message: 'OK' };
   }
 
   @Patch('/:id')
   @Validate()
-  async updateOrder(
+  async update(
     @Param('id') id: number,
-    @Body() order: OrderDTO
+    @Body() body: OrderDTO
   ): Promise<IResponse> {
-    await this.orderService.updateOrder({
+    await this.orderService.update({
       id,
-      ...order,
-      departureTime: new Date(order.departureTime),
+      ...body,
+      departureTime: new Date(body.departureTime),
     });
     return { success: true, message: 'OK' };
   }
 
   @Get('/:id')
-  async getOrder(@Param('id') id: number): Promise<IResponse<Order>> {
-    const order = await this.orderService.getOrder({ id });
-    return { success: true, message: 'OK', data: order };
+  async get(@Param('id') id: number): Promise<IResponse<Order>> {
+    const res = await this.orderService.get({ id });
+    return { success: true, message: 'OK', data: res };
   }
 
   @Get('/')
-  async getAllOrders(): Promise<IResponse<Order[]>> {
-    const orders = await this.orderService.getAllOrders();
-    return { success: true, message: 'OK', data: orders };
+  async getAll(): Promise<IResponse<Order[]>> {
+    const res = await this.orderService.getAll();
+    return { success: true, message: 'OK', data: res };
   }
 }

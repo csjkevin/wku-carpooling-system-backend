@@ -28,41 +28,41 @@ export class APIController {
 
   @Post('/')
   @Validate()
-  async createUser(@Body() user: CreateUserDTO): Promise<IResponse<User>> {
-    const res = await this.userService.createUser({
-      ...user,
+  async create(@Body() body: CreateUserDTO): Promise<IResponse<User>> {
+    const res = await this.userService.create({
+      ...body,
     });
     return { success: true, message: 'OK', data: res };
   }
 
   @Del('/:id')
-  async deleteUser(@Param('id') id: number): Promise<IResponse> {
-    await this.userService.deleteUser({ id });
+  async delete(@Param('id') id: number): Promise<IResponse> {
+    await this.userService.delete({ id });
     return { success: true, message: 'OK' };
   }
 
   @Patch('/:id')
   @Validate()
-  async updateUser(
+  async update(
     @Param('id') id: number,
-    @Body() user: UserDTO
+    @Body() body: UserDTO
   ): Promise<IResponse> {
-    await this.userService.updateUser({
+    await this.userService.update({
       id,
-      ...user,
+      ...body,
     });
     return { success: true, message: 'OK' };
   }
 
   @Get('/:id')
-  async getUser(@Param('id') id: number): Promise<IResponse<User>> {
-    const user = await this.userService.getUser({ id });
-    return { success: true, message: 'OK', data: user };
+  async get(@Param('id') id: number): Promise<IResponse<User>> {
+    const res = await this.userService.get({ id });
+    return { success: true, message: 'OK', data: res };
   }
 
   @Get('/')
-  async getAllUsers(): Promise<IResponse<User[]>> {
-    const users = await this.userService.getAllUsers();
-    return { success: true, message: 'OK', data: users };
+  async getAll(): Promise<IResponse<User[]>> {
+    const res = await this.userService.getAll();
+    return { success: true, message: 'OK', data: res };
   }
 }

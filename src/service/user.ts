@@ -9,39 +9,39 @@ export class UserService {
   @InjectEntityModel(User)
   userRepository: Repository<User>;
 
-  async createUser(options: UserDTO) {
-    const user = await this.userRepository.save(options);
-    return user;
+  async create(options: UserDTO) {
+    const res = await this.userRepository.save(options);
+    return res;
   }
 
-  async deleteUser(options: UserDTO) {
-    const user = await this.userRepository.findOneBy({
+  async delete(options: UserDTO) {
+    const res = await this.userRepository.findOneBy({
       id: options.id,
     });
-    if (user) {
-      await this.userRepository.remove(user);
+    if (res) {
+      await this.userRepository.remove(res);
     }
   }
 
-  async updateUser(options: UserDTO) {
-    const user = await this.userRepository.findOneBy({
+  async update(options: UserDTO) {
+    const res = await this.userRepository.findOneBy({
       id: options.id,
     });
-    if (user) {
+    if (res) {
       for (const key in options) {
-        user[key] = options[key];
+        res[key] = options[key];
       }
-      await this.userRepository.save(user);
+      await this.userRepository.save(res);
     }
   }
 
-  async getUser(options: UserDTO) {
-    const user = await this.userRepository.findOneBy(options);
-    return user;
+  async get(options: UserDTO) {
+    const res = await this.userRepository.findOneBy(options);
+    return res;
   }
 
-  async getAllUsers() {
-    const users = await this.userRepository.find();
-    return users;
+  async getAll() {
+    const res = await this.userRepository.find();
+    return res;
   }
 }
