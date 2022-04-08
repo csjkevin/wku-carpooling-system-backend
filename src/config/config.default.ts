@@ -20,5 +20,13 @@ export default (appInfo: MidwayAppInfo) => {
       synchronize: false,
       logging: false,
     },
+    redis: {
+      client: {
+        port: 6379,
+        host: 'localhost',
+        password: '',
+        db: 0,
+      },
+    },
   } as MidwayConfig;
 };
