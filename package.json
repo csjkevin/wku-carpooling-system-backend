@@ -8,7 +8,7 @@
     "@midwayjs/core": "^3.0.0",
     "@midwayjs/decorator": "^3.0.0",
     "@midwayjs/orm": "3",
-    "@midwayjs/redis": "3",
+    "@midwayjs/redis": "~3.2",
     "@midwayjs/validate": "3",
     "@midwayjs/web": "^3.0.0",
     "axios": "^0.26.1",
