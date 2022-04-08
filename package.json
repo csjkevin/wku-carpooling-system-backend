@@ -14,7 +14,8 @@
     "dayjs": "^1.11.0",
     "egg": "^2.0.0",
     "pg": "^8.7.3",
-    "typeorm": "^0.3.4"
+    "typeorm": "^0.3.4",
+    "nodemailer": "^6.7.3"
   },
   "devDependencies": {
     "@midwayjs/cli": "^1.0.0",
@@ -22,6 +23,7 @@
     "@midwayjs/mock": "^3.0.0",
     "@types/jest": "^26.0.10",
     "@types/node": "14",
+    "@types/nodemailer": "^6.4.4",
     "cross-env": "^6.0.0",
     "egg-mock": "^3.26.0",
     "jest": "^26.4.0",
