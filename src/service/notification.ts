@@ -1,7 +1,7 @@
-import { Provide } from '@midwayjs/decorator';
-import axios from 'axios';
+import { Inject, Provide } from '@midwayjs/decorator';
 import * as dayjs from 'dayjs';
 import { OrderDTO } from '../dto/order';
+import { HttpService } from '@midwayjs/axios';
 
 const DATE_FORMAT = 'YYYY年M月D日 HH:mm';
 const WECHATWORK_WEBHOOK_KEY =
@@ -10,11 +10,14 @@ const FEISHU_WEBHOOK_ID = process.env.WKU_CARPOOLING_SYSTEM_FEISHU_WEBHOOK_ID;
 
 @Provide()
 export class NotificationService {
+  @Inject()
+  httpService: HttpService;
+
   async newOrderNotificationWechatWork(options: OrderDTO) {
     if (!WECHATWORK_WEBHOOK_KEY) {
       return;
     }
-    const res = await axios.post(
+    const res = await this.httpService.post(
       `https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHATWORK_WEBHOOK_KEY}`,
       {
         msgtype: 'markdown',
@@ -40,7 +43,7 @@ export class NotificationService {
     if (!FEISHU_WEBHOOK_ID) {
       return;
     }
-    const res = await axios.post(
+    const res = await this.httpService.post(
       `https://open.feishu.cn/open-apis/bot/v2/hook/${FEISHU_WEBHOOK_ID}`,
       {
         msg_type: 'interactive',
