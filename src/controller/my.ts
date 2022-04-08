@@ -1,7 +1,8 @@
 import { Controller, Get, Inject } from '@midwayjs/decorator';
 import { Context } from 'egg';
+import { AuthMiddleware } from '../middleware/auth';
 
-@Controller('/my')
+@Controller('/my', { middleware: [AuthMiddleware] })
 export class MyController {
   @Inject()
   ctx: Context;

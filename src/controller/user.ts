@@ -13,9 +13,10 @@ import { Context } from 'egg';
 import { CreateUserDTO, UserDTO } from '../dto/user';
 import { User } from '../entity/user';
 import { IResponse } from '../interface/common';
+import { AuthMiddleware } from '../middleware/auth';
 import { UserService } from '../service/user';
 
-@Controller('/users')
+@Controller('/users', { middleware: [AuthMiddleware] })
 export class APIController {
   @Inject()
   ctx: Context;
