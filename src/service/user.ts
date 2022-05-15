@@ -2,19 +2,19 @@ import { Provide } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/orm';
 import { User } from '../entity/user';
 import { Repository } from 'typeorm';
-import { IUserOptions } from '../interface/user';
+import { UserDTO } from '../dto/user';
 
 @Provide()
 export class UserService {
   @InjectEntityModel(User)
   userRepository: Repository<User>;
 
-  async createUser(options: IUserOptions) {
+  async createUser(options: UserDTO) {
     const user = await this.userRepository.save(options);
     return user;
   }
 
-  async deleteUser(options: IUserOptions) {
+  async deleteUser(options: UserDTO) {
     const user = await this.userRepository.findOneBy({
       id: options.id,
     });
@@ -23,7 +23,7 @@ export class UserService {
     }
   }
 
-  async updateUser(options: IUserOptions) {
+  async updateUser(options: UserDTO) {
     const user = await this.userRepository.findOneBy({
       id: options.id,
     });
@@ -35,7 +35,7 @@ export class UserService {
     }
   }
 
-  async getUser(options: IUserOptions) {
+  async getUser(options: UserDTO) {
     const user = await this.userRepository.findOneBy(options);
     return user;
   }

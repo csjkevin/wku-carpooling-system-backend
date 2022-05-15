@@ -8,10 +8,11 @@ import {
   Param,
   Body,
 } from '@midwayjs/decorator';
+import { Validate } from '@midwayjs/validate';
 import { Context } from 'egg';
+import { CreateOrderDTO, OrderDTO } from '../dto/order';
 import { Order } from '../entity/order';
 import { IResponse } from '../interface/common';
-import { IUserOptions } from '../interface/user';
 import { OrderService } from '../service/order';
 
 @Controller('/orders')
@@ -23,21 +24,13 @@ export class APIController {
   orderService: OrderService;
 
   @Post('/')
-  async createOrder(
-    @Body('fromAddress') fromAddress: string,
-    @Body('toAddress') toAddress: string,
-    @Body('capacity') capacity: number,
-    @Body('departureTime') departureTime: string,
-    @Body('remark') remark: string
-  ): Promise<IResponse<IUserOptions & Order>> {
-    const order = await this.orderService.createOrder({
-      fromAddress,
-      toAddress,
-      departureTime: new Date(departureTime),
-      capacity,
-      remark,
+  @Validate()
+  async createOrder(@Body() order: CreateOrderDTO): Promise<IResponse<Order>> {
+    const res = await this.orderService.createOrder({
+      ...order,
+      departureTime: new Date(order.departureTime),
     });
-    return { success: true, message: 'OK', data: order };
+    return { success: true, message: 'OK', data: res };
   }
 
   @Del('/:id')
@@ -47,21 +40,15 @@ export class APIController {
   }
 
   @Patch('/:id')
+  @Validate()
   async updateOrder(
     @Param('id') id: number,
-    @Body('fromAddress') fromAddress: string,
-    @Body('toAddress') toAddress: string,
-    @Body('capacity') capacity: number,
-    @Body('departureTime') departureTime: string,
-    @Body('remark') remark: string
+    @Body() order: OrderDTO
   ): Promise<IResponse> {
     await this.orderService.updateOrder({
       id,
-      fromAddress,
-      toAddress,
-      departureTime: new Date(departureTime),
-      capacity,
-      remark,
+      ...order,
+      departureTime: new Date(order.departureTime),
     });
     return { success: true, message: 'OK' };
   }

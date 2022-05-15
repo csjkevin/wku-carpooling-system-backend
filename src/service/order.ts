@@ -2,8 +2,8 @@ import { Inject, Provide } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/orm';
 import { Order } from '../entity/order';
 import { Repository } from 'typeorm';
-import { IOrderOptions } from '../interface/order';
 import { NotificationService } from './notification';
+import { OrderDTO } from '../dto/order';
 
 @Provide()
 export class OrderService {
@@ -13,7 +13,7 @@ export class OrderService {
   @InjectEntityModel(Order)
   orderRepository: Repository<Order>;
 
-  async createOrder(options: IOrderOptions) {
+  async createOrder(options: OrderDTO) {
     const order = await this.orderRepository.save(options);
     if (order) {
       await this.notificationService.newOrderNotificationWechatWork(options);
@@ -22,7 +22,7 @@ export class OrderService {
     return order;
   }
 
-  async deleteOrder(options: IOrderOptions) {
+  async deleteOrder(options: OrderDTO) {
     const order = await this.orderRepository.findOneBy({
       id: options.id,
     });
@@ -31,7 +31,7 @@ export class OrderService {
     }
   }
 
-  async updateOrder(options: IOrderOptions) {
+  async updateOrder(options: OrderDTO) {
     const order = await this.orderRepository.findOneBy({
       id: options.id,
     });
@@ -43,7 +43,7 @@ export class OrderService {
     }
   }
 
-  async getOrder(options: IOrderOptions) {
+  async getOrder(options: OrderDTO) {
     const order = await this.orderRepository.findOneBy(options);
     return order;
   }

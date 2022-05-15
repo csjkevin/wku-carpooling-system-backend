@@ -8,10 +8,11 @@ import {
   Param,
   Body,
 } from '@midwayjs/decorator';
+import { Validate, ValidateService } from '@midwayjs/validate';
 import { Context } from 'egg';
+import { CreateUserDTO, UserDTO } from '../dto/user';
 import { User } from '../entity/user';
 import { IResponse } from '../interface/common';
-import { IUserOptions } from '../interface/user';
 import { UserService } from '../service/user';
 
 @Controller('/users')
@@ -22,16 +23,16 @@ export class APIController {
   @Inject()
   userService: UserService;
 
+  @Inject()
+  validateService: ValidateService;
+
   @Post('/')
-  async createUser(
-    @Body('email') email: string,
-    @Body('password') password: string
-  ): Promise<IResponse<IUserOptions & User>> {
-    const user = await this.userService.createUser({
-      email,
-      password,
+  @Validate()
+  async createUser(@Body() user: CreateUserDTO): Promise<IResponse<User>> {
+    const res = await this.userService.createUser({
+      ...user,
     });
-    return { success: true, message: 'OK', data: user };
+    return { success: true, message: 'OK', data: res };
   }
 
   @Del('/:id')
@@ -41,15 +42,14 @@ export class APIController {
   }
 
   @Patch('/:id')
+  @Validate()
   async updateUser(
     @Param('id') id: number,
-    @Body('email') email: string,
-    @Body('password') password: string
+    @Body() user: UserDTO
   ): Promise<IResponse> {
     await this.userService.updateUser({
       id,
-      email,
-      password,
+      ...user,
     });
     return { success: true, message: 'OK' };
   }
